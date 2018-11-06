@@ -41,7 +41,7 @@
 	
 	NSURL *refUrl = _URL;
 	NSFileProtectionType refProtection = nil;
-	while (!refProtection && refUrl.pathComponents.count) {
+	while (!refProtection && refUrl.pathComponents.count > 1) {
 		NSDictionary *refAttrs = [NSFileManager.defaultManager attributesOfItemAtPath:refUrl.path error:nil];
 		refProtection = refAttrs[NSFileProtectionKey];
 		refUrl = [refUrl URLByDeletingLastPathComponent];
