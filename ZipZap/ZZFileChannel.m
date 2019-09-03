@@ -35,6 +35,9 @@
 																		 create:NO
 																		  error:error];
 	
+	#ifdef TARGET_OS_MAC
+	#else
+	
 	// Make sure (if we can) that the temporary directory has the same file protection class as the reference URL
 	NSDictionary *tdAttrs = [NSFileManager.defaultManager attributesOfItemAtPath:temporaryDirectory.path error:nil];
 	NSFileProtectionType tdProtection = tdAttrs[NSFileProtectionKey];
@@ -49,6 +52,7 @@
 	if (refProtection && ![tdProtection isEqualToString:refProtection]) {
 		[NSFileManager.defaultManager setAttributes:@{ NSFileProtectionKey : refProtection } ofItemAtPath:temporaryDirectory.path error:nil];
 	}
+	#endif
 	
 	return temporaryDirectory ? [[ZZFileChannel alloc] initWithURL:[temporaryDirectory URLByAppendingPathComponent:_URL.lastPathComponent]] : nil;
 }
